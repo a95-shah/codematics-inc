@@ -73,7 +73,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="py-2 px-4 text-md font-semibold transition-colors duration-300 relative"
+                className="py-2 px-4 text-sm font-semibold transition-colors duration-300 relative"
                 style={{
                   color:
                     pathname === link.href ? "var(--red)" : "var(--gray-200)",
