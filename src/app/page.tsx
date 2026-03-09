@@ -204,6 +204,7 @@ export default function HomePage() {
                   src="/new.png"
                   alt="About Codematics"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
                 />
               </div>
@@ -333,6 +334,7 @@ export default function HomePage() {
                   src="/remote-talent.jpg"
                   alt="Global Remote Talent"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

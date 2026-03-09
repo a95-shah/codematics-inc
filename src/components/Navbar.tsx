@@ -60,6 +60,7 @@ export default function Navbar() {
     width={80}
     height={80}
     className="object-contain"
+    priority
   />
 </div>
             <span className="font-heading font-extrabold text-[22px] tracking-[1px]">
