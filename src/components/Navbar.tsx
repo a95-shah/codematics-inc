@@ -69,7 +69,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="flex items-center gap-1
+          <div className="flex items-center gap-0
            desktop-nav">
             {navLinks.map((link) => (
               <Link
