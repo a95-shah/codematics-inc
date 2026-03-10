@@ -97,7 +97,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="hero-badge"
+              className="hero-badge mb-8"
             >
               Software Engineering Excellence
             </motion.div>
