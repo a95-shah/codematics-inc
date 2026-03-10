@@ -87,7 +87,7 @@ export default function HomePage() {
         <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full blur-[60px]" style={{ background: "radial-gradient(circle, rgba(201,34,40,0.08) 0%, transparent 70%)" }} />
         <div className="absolute -bottom-[20%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[60px]" style={{ background: "radial-gradient(circle, rgba(201,34,40,0.06) 0%, transparent 70%)" }} />
 
-        <div className="relative z-[1] text-center max-w-[900px] px-6">
+        <div className="relative z-[1] text-center max-w-[900px] px-6 mt-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
