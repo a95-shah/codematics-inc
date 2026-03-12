@@ -279,7 +279,7 @@ export default function HomePage() {
       {/* ===== TEAM ===== */}
       <section id="team" className="section bg-bg-secondary">
         <div className="container">
-          <SectionHeading title={<><span className="text-white-theme">Team</span> <span className="text-[#c92228]">Codematics</span></>} subtitle="Our talented and diverse team of professionals drives innovation and excellence in every project we undertake." />
+          <SectionHeading title={<><span className="text-white-theme">OUR</span> <span className="text-[#c92228]">Global Leadership</span></>} subtitle="Our talented and diverse team of professionals drives innovation and excellence in every project we undertake." />
           <div className="grid-4">
             {teamMembers.slice(0, 8).map((member, i) => (
               <TeamCard key={member.name} name={member.name} role={member.role} index={i} />
