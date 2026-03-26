@@ -38,13 +38,13 @@ export default function Counter({ end, suffix = "", label, duration = 2000 }: Co
   return (
     <div
       ref={ref}
-      className="text-center py-8 px-6 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl transition-all duration-300"
+      className="text-center py-4 px-2 sm:py-6 sm:px-4 md:py-8 md:px-6 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl transition-all duration-300"
     >
-      <div className="text-[clamp(2.5rem,5vw,3.5rem)] font-black font-heading leading-none mb-2 bg-gradient-to-br from-red to-red-light bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+      <div className="text-[clamp(1.5rem,5vw,3.5rem)] font-black font-heading leading-none mb-2 bg-gradient-to-br from-red to-red-light bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
         {count}
         {suffix}
       </div>
-      <div className="text-[0.95rem] text-gray-300 font-medium uppercase tracking-[2px]">
+      <div className="text-[0.65rem] sm:text-[0.8rem] md:text-[0.95rem] text-gray-300 font-medium uppercase tracking-tight md:tracking-[2px] break-words">
         {label}
       </div>
     </div>
