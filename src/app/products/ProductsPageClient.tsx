@@ -7,18 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import Counter from "@/components/Counter";
 import Link from "next/link";
 
-const products = [
-  { title: "Universal TV Remote", description: "Over 180 million users worldwide. The ultimate smart remote control app compatible with all TV brands — Samsung, LG, Sony, and more.", color: "#c92228" },
-  { title: "InvoiceBilling | Receipt Maker", description: "Fast invoices, quick payments. A comprehensive billing and receipt solution for businesses of all sizes.", color: "#2563eb" },
-  { title: "Codematics Point of Sale", description: "A full-featured POS system for modern retail and business management with inventory tracking and analytics.", color: "#059669" },
-  { title: "Citizen Master", description: "Your ID, civil records, services & more — all in one secure digital platform for citizen services.", color: "#7c3aed" },
-  { title: "CV Maker | Resume Builder", description: "Create standardized and personalized resumes instantly with our professional, easy-to-use resume builder.", color: "#d97706" },
-  { title: "Smart Roku Remote", description: "Your Roku devices and streaming — a smart remote control app with all features for Roku TVs.", color: "#0891b2" },
-  { title: "Bomber Warrior Game", description: "Find the spirit of challenges — an exciting action-packed gaming experience by Codematics.", color: "#dc2626" },
-  { title: "Blood Community App", description: "Give blood, save lives — a community-driven mobile app connecting blood donors with recipients.", color: "#e11d48" },
-  { title: "Fund Raising Record Keeping", description: "Easily manage and monitor all fundraising activities with our comprehensive record-keeping solution.", color: "#65a30d" },
-  { title: "Flicky Chicky Arcader", description: "A delightful jumping and running game — fun for all ages with colorful graphics and engaging gameplay.", color: "#f59e0b" },
-];
+import { products } from "@/data/productsData";
 
 export default function ProductsPageClient() {
   return (
@@ -57,7 +46,7 @@ export default function ProductsPageClient() {
           <SectionHeading title="Featured Products" subtitle="Explore our portfolio of innovative products trusted by millions worldwide." />
           <div className="grid-3">
             {products.map((product, i) => (
-              <ProductCard key={product.title} title={product.title} description={product.description} color={product.color} index={i} />
+              <ProductCard key={product.slug} slug={product.slug} title={product.title} description={product.description} color={product.color} index={i} />
             ))}
           </div>
         </div>

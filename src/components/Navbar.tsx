@@ -113,22 +113,13 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile: Theme Toggle + Menu Button */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="theme-toggle mobile-menu-btn !hidden !w-9 !h-9 !text-base"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <FiSun /> : <FiMoon />}
-            </button>
-            <button
-              className="mobile-menu-btn hidden bg-transparent border-none text-white-theme text-[28px] cursor-pointer"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <HiX /> : <HiMenuAlt3 />}
-            </button>
-          </div>
+          {/* Mobile: Menu Button */}
+          <button
+            className="mobile-menu-btn hidden bg-transparent border-none text-white-theme text-[28px] cursor-pointer"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <HiX /> : <HiMenuAlt3 />}
+          </button>
         </div>
       </motion.nav>
 
@@ -140,7 +131,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 right-0 w-4/5 max-w-[360px] h-screen backdrop-blur-[20px] z-[999] pt-[100px] px-10 pb-10 flex flex-col gap-2 border-l border-glass-border"
+            className="fixed top-0 right-0 w-4/5 max-w-[360px] h-screen backdrop-blur-[20px] z-[999] pt-[100px] px-10 pb-10 flex flex-col gap-2 border-l border-glass-border overflow-y-auto"
             style={{ background: "var(--mobile-menu-bg)" }}
           >
             {navLinks.map((link, i) => (
@@ -171,6 +162,25 @@ export default function Navbar() {
               >
                 Remote Resources
               </Link>
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              <button
+                onClick={toggleTheme}
+                className="theme-toggle mt-4 w-full flex items-center justify-center gap-2 !rounded-full"
+                aria-label="Toggle theme"
+              >
+                <motion.div
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-2"
+                >
+                  {theme === "dark" ? <FiSun /> : <FiMoon />}
+                  <span className="text-sm">{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                </motion.div>
+              </button>
             </motion.div>
           </motion.div>
         )}

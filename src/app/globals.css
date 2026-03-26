@@ -236,11 +236,11 @@
 
   /* Grid layouts */
   .grid-3 {
-    @apply grid grid-cols-3 gap-8 lg:grid-cols-2 md:grid-cols-1;
+    @apply grid grid-cols-1 gap-8 md:grid-cols-3;
   }
 
   .grid-4 {
-    @apply grid grid-cols-4 gap-6 lg:grid-cols-2 md:grid-cols-1;
+    @apply grid grid-cols-1 gap-8 md:grid-cols-3;
   }
 
   /* Glow line divider */

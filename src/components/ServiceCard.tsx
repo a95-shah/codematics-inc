@@ -2,25 +2,27 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
+import Link from "next/link";
 
 interface ServiceCardProps {
   icon: ReactNode;
   title: string;
   description: string;
   index: number;
+  slug?: string;
 }
 
-export default function ServiceCard({ icon, title, description, index }: ServiceCardProps) {
+export default function ServiceCard({ icon, title, description, index, slug }: ServiceCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  return (
+  const card = (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="p-8 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl cursor-pointer transition-all duration-[400ms] relative overflow-hidden hover:border-[rgba(201,34,40,0.4)] hover:shadow-[0_0_30px_rgba(201,34,40,0.15)] hover:-translate-y-2"
+      className="p-8 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl cursor-pointer transition-all duration-[400ms] relative overflow-hidden hover:border-[rgba(201,34,40,0.4)] hover:shadow-[0_0_30px_rgba(201,34,40,0.15)] hover:-translate-y-2 h-full"
     >
       {/* Red glow on top */}
       <div
@@ -45,4 +47,10 @@ export default function ServiceCard({ icon, title, description, index }: Service
       </div>
     </motion.div>
   );
+
+  if (slug) {
+    return <Link href={`/services/${slug}`} className="block h-full">{card}</Link>;
+  }
+
+  return card;
 }

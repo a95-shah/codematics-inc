@@ -27,50 +27,11 @@ import {
   HiLocationMarker,
 } from "react-icons/hi";
 
-/* ========== DATA ========== */
-const services = [
-  { icon: <HiDeviceMobile />, title: "Mobile Apps Development", description: "The global scenario of Mobile Apps Development is currently witnessing an enormous growth. With so many apps coming up, we deliver high-quality mobile solutions." },
-  { icon: <HiCode />, title: "Web Development", description: "Team Codematics possesses excellent web development skills. Our web designers and developers know their job well when it comes to building world-class web applications." },
-  { icon: <HiDesktopComputer />, title: "Game Development", description: "Making and developing games from an idea to its functional stage is where all the fun lies. For our team, its more fascinating to create immersive gaming experiences." },
-  { icon: <HiColorSwatch />, title: "UX/UI & Graphic Design", description: "In a world increasingly driven by visual content, businesses and individuals are constantly searching for the best way to communicate through stunning design." },
-  { icon: <HiCube />, title: "3D Modeling & Animation", description: "We blend creativity with technical precision to transform visual storytelling into motions, influencing how brands connect with audiences worldwide." },
-  { icon: <HiSpeakerphone />, title: "Digital Marketing", description: "We at Codematics have the expertise of working on how to use the web and digital space to achieve core business goals and drive measurable results." },
-  { icon: <HiLightningBolt />, title: "Generative AI", description: "We are at the forefront of AI innovation, utilizing the latest models and techniques to help you drive sustained growth and competitive advantage." },
-  { icon: <HiChat />, title: "Natural Language Processing", description: "Codematics' unique approach to NLP helps clients create smarter, more intuitive systems that transform how they engage with technology." },
-  { icon: <HiLink />, title: "Blockchain Technology", description: "As a trusted provider of blockchain development and consulting services, we help businesses create secure, decentralized solutions." },
-];
-
-const teamMembers = [
-  { name: "Malik Ahsan Ali", role: "Managing Director (MD) / Founder" },
-  { name: "Hammad Lodhi", role: "Chief Executive Officer" },
-  { name: "Waqar Ahmad", role: "Chief Financial Officer" },
-  { name: "Babar Ali", role: "General Manager" },
-  { name: "Obaid Ullah Khan", role: "Admin / Accounts Officer" },
-  { name: "Abu Huraira", role: "Admin Assistant" },
-  { name: "Adeel", role: "SQA Engineer" },
-  { name: "Farhad Younas", role: "iOS Engineer" },
-  { name: "Kaleem Ahmad", role: "3D Modeler & Animator | Team Lead" },
-  { name: "Muhammad Mursaleen", role: "3D Technical Director" },
-  { name: "Umaima Malik", role: "3D Modeler & Animator" },
-];
-
-const products = [
-  { title: "Universal TV Remote", description: "Over 180 million users worldwide. Control your TV with the ultimate smart remote app.", color: "#c92228" },
-  { title: "InvoiceBilling | Receipt Maker", description: "Fast invoices, quick payments. A comprehensive billing solution for businesses.", color: "#2563eb" },
-  { title: "Codematics Point of Sale", description: "A full-featured POS system for modern retail and business management.", color: "#059669" },
-  { title: "Citizen Master", description: "Your ID, civil records, services & more — all in one secure digital platform.", color: "#7c3aed" },
-  { title: "CV Maker | Resume Builder", description: "Create professional CVs and resumes instantly with our easy-to-use builder.", color: "#d97706" },
-  { title: "Smart Roku Remote", description: "The smartest remote control app for Roku TVs and streaming devices.", color: "#0891b2" },
-];
-
-const newsItems = [
-  { title: "CV Maker | Resume Builder App", description: "Create standardized and personalized resumes — the job search companion for every professional." },
-  { title: "Bomber Warrior Game", description: "Find the spirit of challenges — an exciting action-packed gaming experience by Codematics." },
-  { title: "Blood Community Mobile App", description: "Give blood, save lives — a community-driven app connecting blood donors with recipients." },
-  { title: "Fund Raising Record Keeping", description: "Easily manage and track fundraising records with our comprehensive management solution." },
-  { title: "Flicky Chicky Fun Platform Arcader", description: "A delightful jumping and running game bringing fun for all ages." },
-  { title: "Smart TVs Remote Control", description: "Remote control for iOS and Android — your TV command center in your pocket." },
-];
+import { services } from "@/data/servicesData";
+import { teamMembers, TeamMember } from "@/data/teamData";
+import { products } from "@/data/productsData";
+import { newsItems } from "@/data/newsData";
+import { getServiceIcon } from "@/utils/iconMap";
 
 export default function HomePage() {
   return (
@@ -232,15 +193,21 @@ export default function HomePage() {
             subtitle="We have a refined process after we have taken up a project. We offer the platform from where the projects take shape through stages of planning, testing and execution. We follow an agile methodology and run the project through a loop of feedback and constant improvement."
           />
           <div className="grid-3">
-            {services.map((service, i) => (
+            {services.slice(0, 3).map((service, i) => (
               <ServiceCard
-                key={service.title}
-                icon={service.icon}
+                key={service.slug}
+                slug={service.slug}
+                icon={getServiceIcon(service.iconName)}
                 title={service.title}
                 description={service.description}
                 index={i}
               />
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/services" className="btn-primary">
+              View All Services
+            </Link>
           </div>
         </div>
       </section>
@@ -281,7 +248,7 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading title={<><span className="text-white-theme">OUR</span> <span className="text-[#c92228]">Global Leadership</span></>} subtitle="Our talented and diverse team of professionals drives innovation and excellence in every project we undertake." />
           <div className="grid-4">
-            {teamMembers.slice(0, 8).map((member, i) => (
+            {teamMembers.slice(0, 3).map((member: TeamMember, i: number) => (
               <TeamCard key={member.name} name={member.name} role={member.role} index={i} />
             ))}
           </div>
@@ -298,9 +265,10 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading title={<><span className="text-white-theme">Our Winning</span> <span className="text-[#c92228]">Products</span></>} subtitle="Our portfolio of award-winning products that serve millions of users worldwide." />
           <div className="grid-3">
-            {products.map((product, i) => (
+            {products.slice(0, 3).map((product, i) => (
               <ProductCard
-                key={product.title}
+                key={product.slug}
+                slug={product.slug}
                 title={product.title}
                 description={product.description}
                 color={product.color}
@@ -390,23 +358,25 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading title={<><span className="text-white-theme">Latest</span> <span className="text-[#c92228]">News</span></>} subtitle="Stay updated with our latest projects, releases, and company news." />
           <div className="grid-3">
-            {newsItems.map((item, i) => (
-              <AnimatedSection key={item.title} delay={i * 0.08}>
-                <div className="bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl overflow-hidden transition-all duration-[400ms] cursor-pointer hover:border-[rgba(201,34,40,0.3)] hover:-translate-y-1.5 hover:shadow-[0_0_30px_rgba(201,34,40,0.15)]">
-                  <div className="h-[180px] flex items-center justify-center bg-gradient-to-br from-bg-tertiary to-bg-primary">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-black text-white-theme bg-gradient-to-br from-red to-red-dark">
-                      C
+            {newsItems.slice(0, 3).map((item, i) => (
+              <AnimatedSection key={item.slug} delay={i * 0.08}>
+                <Link href={`/news/${item.slug}`} className="block h-full">
+                  <div className="bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl overflow-hidden transition-all duration-[400ms] cursor-pointer hover:border-[rgba(201,34,40,0.3)] hover:-translate-y-1.5 hover:shadow-[0_0_30px_rgba(201,34,40,0.15)] h-full flex flex-col">
+                    <div className="h-[180px] flex items-center justify-center bg-gradient-to-br from-bg-tertiary to-bg-primary shrink-0">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-black text-white-theme bg-gradient-to-br from-red to-red-dark">
+                        C
+                      </div>
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-base font-bold mb-2 font-heading text-white-theme">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm leading-relaxed flex-1">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-base font-bold mb-2 font-heading text-white-theme">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+                </Link>
               </AnimatedSection>
             ))}
           </div>

@@ -5,22 +5,9 @@ import AnimatedSection from "@/components/AnimatedSection";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import Link from "next/link";
-import {
-  HiDeviceMobile, HiCode, HiDesktopComputer, HiColorSwatch,
-  HiCube, HiSpeakerphone, HiLightningBolt, HiChat, HiLink,
-} from "react-icons/hi";
+import { getServiceIcon } from "@/utils/iconMap";
 
-const services = [
-  { icon: <HiDeviceMobile />, title: "Mobile Apps Development", description: "The global scenario of Mobile Apps Development is currently witnessing an enormous growth. With so many apps coming up, we deliver high-quality, scalable mobile solutions for iOS and Android platforms using the latest frameworks and technologies.", details: ["iOS & Android Native Apps", "Cross-Platform Development", "App Store Optimization", "Maintenance & Support"] },
-  { icon: <HiCode />, title: "Web Development", description: "Team Codematics possesses excellent web development skills. Our web designers and developers know their job well when it comes to building world-class, responsive, and performant web applications.", details: ["Full-Stack Web Applications", "Progressive Web Apps (PWA)", "E-Commerce Solutions", "CMS Development"] },
-  { icon: <HiDesktopComputer />, title: "Game Development", description: "Making and developing games from an idea to its functional stage is where all the fun lies. For our team, it's more fascinating to create immersive gaming experiences across platforms.", details: ["Unity & Unreal Engine", "2D & 3D Games", "AR/VR Experiences", "Cross-Platform Gaming"] },
-  { icon: <HiColorSwatch />, title: "UX/UI & Graphic Design", description: "In a world increasingly driven by visual content, businesses and individuals are constantly searching for the best way to communicate through stunning, user-centric design.", details: ["User Experience Research", "Interface Design", "Brand Identity", "Design Systems"] },
-  { icon: <HiCube />, title: "3D Modeling & Animation", description: "We blend creativity with technical precision to transform visual storytelling into motions, influencing how brands connect with their audiences worldwide.", details: ["Character Modeling", "Product Visualization", "Motion Graphics", "Architectural Rendering"] },
-  { icon: <HiSpeakerphone />, title: "Digital Marketing", description: "We at Codematics have the expertise of working on how to use the web and digital space to achieve core business goals and drive measurable results.", details: ["SEO & SEM", "Social Media Marketing", "Content Strategy", "Analytics & Reporting"] },
-  { icon: <HiLightningBolt />, title: "Generative AI", description: "We are at the forefront of AI innovation, utilizing the latest models and techniques to help you drive sustained growth and competitive advantage in the age of AI.", details: ["Custom AI Models", "LLM Integration", "AI-Powered Automation", "Chatbot Development"] },
-  { icon: <HiChat />, title: "Natural Language Processing", description: "Codematics' unique approach to NLP helps clients create smarter, more intuitive systems that transform how they engage with technology and users.", details: ["Text Analytics", "Sentiment Analysis", "Language Models", "Voice Assistants"] },
-  { icon: <HiLink />, title: "Blockchain Technology", description: "As a trusted provider of blockchain development and consulting services, we help businesses create secure, transparent, and decentralized solutions.", details: ["Smart Contracts", "DeFi Solutions", "NFT Marketplaces", "Blockchain Consulting"] },
-];
+import { services } from "@/data/servicesData";
 
 export default function ServicesPageClient() {
   return (
@@ -47,8 +34,9 @@ export default function ServicesPageClient() {
           <div className="grid-3">
             {services.map((service, i) => (
               <ServiceCard
-                key={service.title}
-                icon={service.icon}
+                key={service.slug}
+                slug={service.slug}
+                icon={getServiceIcon(service.iconName)}
                 title={service.title}
                 description={service.description}
                 index={i}
@@ -66,7 +54,7 @@ export default function ServicesPageClient() {
             <AnimatedSection key={service.title} delay={0.05} direction={i % 2 === 0 ? "left" : "right"}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-[60px] p-10 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-[20px] about-grid">
                 <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
-                  <div className="text-4xl text-red mb-4">{service.icon}</div>
+                  <div className="text-4xl text-red mb-4">{getServiceIcon(service.iconName)}</div>
                   <h3 className="text-[22px] font-bold mb-4 font-heading">{service.title}</h3>
                   <p className="text-gray-300 text-[15px] leading-[1.8] mb-5">{service.description}</p>
                   <ul className="list-none grid grid-cols-2 gap-2">
@@ -80,7 +68,7 @@ export default function ServicesPageClient() {
                 </div>
                 <div style={{ order: i % 2 === 0 ? 2 : 1 }}>
                   <div className="w-full aspect-[1.2] rounded-2xl border border-glass-border flex items-center justify-center bg-gradient-to-br from-bg-secondary to-bg-tertiary">
-                    <div className="text-[72px] text-red opacity-30">{service.icon}</div>
+                    <div className="text-[72px] text-red opacity-30">{getServiceIcon(service.iconName)}</div>
                   </div>
                 </div>
               </div>

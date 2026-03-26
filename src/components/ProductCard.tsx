@@ -2,25 +2,27 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 
 interface ProductCardProps {
   title: string;
   description: string;
   color: string;
   index: number;
+  slug?: string;
 }
 
-export default function ProductCard({ title, description, color, index }: ProductCardProps) {
+export default function ProductCard({ title, description, color, index, slug }: ProductCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  return (
+  const card = (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="p-6 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl transition-all duration-[400ms] cursor-pointer overflow-hidden relative hover:border-[rgba(201,34,40,0.3)] hover:shadow-[0_0_30px_rgba(201,34,40,0.15)] hover:-translate-y-1.5"
+      className="p-6 bg-glass-bg backdrop-blur-[20px] border border-glass-border rounded-2xl transition-all duration-[400ms] cursor-pointer overflow-hidden relative hover:border-[rgba(201,34,40,0.3)] hover:shadow-[0_0_30px_rgba(201,34,40,0.15)] hover:-translate-y-1.5 h-full"
     >
       {/* Product icon area */}
       <div
@@ -53,4 +55,10 @@ export default function ProductCard({ title, description, color, index }: Produc
       </div>
     </motion.div>
   );
+
+  if (slug) {
+    return <Link href={`/products/${slug}`} className="block h-full">{card}</Link>;
+  }
+
+  return card;
 }
