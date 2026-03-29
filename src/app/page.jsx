@@ -27,13 +27,33 @@ import {
   HiLocationMarker,
 } from "react-icons/hi";
 
-import { services } from "@/data/servicesData";
-import { teamMembers, TeamMember } from "@/data/teamData";
-import { products } from "@/data/productsData";
-import { newsItems } from "@/data/newsData";
+import { useState, useEffect } from "react";
+// import { services } from "@/data/servicesData";
+// import { teamMembers, TeamMember } from "@/data/teamData";
+// import { products } from "@/data/productsData";
+// import { newsItems } from "@/data/newsData";
 import { getServiceIcon } from "@/utils/iconMap";
 
 export default function HomePage() {
+  const [data, setData] = useState({ services: [], teamMembers: [], products: [], newsItems: [] });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [svRes, tmRes, prRes, nwRes] = await Promise.all([
+          fetch('/api/services?active=true').then(r => r.json()),
+          fetch('/api/team?active=true').then(r => r.json()),
+          fetch('/api/products?active=true').then(r => r.json()),
+          fetch('/api/news?active=true').then(r => r.json()),
+        ]);
+        setData({ services: svRes, teamMembers: tmRes, products: prRes, newsItems: nwRes });
+      } catch (err) { console.error('Data acquisition failed', err); }
+    };
+    fetchData();
+  }, []);
+
+  const { services, teamMembers, products, newsItems } = data;
+
   return (
     <>
       {/* ===== HERO ===== */}
@@ -248,10 +268,11 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading title={<><span className="text-white-theme">OUR</span> <span className="text-[#c92228]">Global Leadership</span></>} subtitle="Our talented and diverse team of professionals drives innovation and excellence in every project we undertake." />
           <div className="grid-4">
-            {teamMembers.slice(0, 3).map((member: TeamMember, i: number) => (
+            {teamMembers.slice(0, 3).map((member, i) => (
               <TeamCard key={member.name} name={member.name} role={member.role} index={i} />
             ))}
           </div>
+
           <div className="text-center mt-10">
             <Link href="/team" className="btn-secondary">
               View Full Team

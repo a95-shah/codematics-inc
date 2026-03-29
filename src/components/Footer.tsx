@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FaTwitter, FaFacebookF, FaYoutube, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { HiMail, HiPhone, HiLocationMarker } from "react-icons/hi";
 import AnimatedSection from "./AnimatedSection";
 import Image from "next/image";
+
 const quickLinks = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
@@ -25,6 +27,9 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <footer
       className="relative overflow-hidden border-t border-glass-border"
@@ -45,14 +50,14 @@ export default function Footer() {
           <AnimatedSection delay={0}>
             <div className="flex items-center gap-2.5 mb-5">
               <div className="w-10 h-10 flex items-center justify-center">
-  <Image
-    src="/logo.png"
-    alt="Logo"
-    width={80}
-    height={80}
-    className="object-contain"
-  />
-</div>
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  width={80}
+                  height={80}
+                  className="object-contain"
+                />
+              </div>
               <span className="font-heading font-extrabold text-xl tracking-[1px]">
                 <span className="text-white-theme">CODE</span><span className="text-[#c92228]">MATICS</span>
               </span>
@@ -79,7 +84,7 @@ export default function Footer() {
             <h4 className="text-base font-bold mb-6 text-white-theme uppercase tracking-[1px]">
               Quick Links
             </h4>
-            <ul className="list-none">
+            <ul className="list-none mb-8">
               {quickLinks.map((link) => (
                 <li key={link.name} className="mb-2.5">
                   <Link
@@ -91,6 +96,12 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            <Link 
+              href="/admin/login" 
+              className="inline-flex items-center px-6 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-gray-400 hover:bg-[#c92228] hover:text-white hover:border-[#c92228] transition-all"
+            >
+              Admin Login
+            </Link>
           </AnimatedSection>
 
           {/* Services */}

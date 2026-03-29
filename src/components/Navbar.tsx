@@ -34,8 +34,12 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  if (pathname?.includes("/admin")) return null;
+
   return (
     <>
+      {/* DEBUG_ID: V3_FIX_03 */}
+
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}

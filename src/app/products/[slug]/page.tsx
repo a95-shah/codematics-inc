@@ -1,17 +1,28 @@
 import { Metadata } from "next";
-import { products } from "@/data/productsData";
 import ProductDetailClient from "./ProductDetailClient";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+import dbConnect from '@/lib/db';
+import Product from '@/lib/models/Product';
+import mongoose from 'mongoose';
+
+async function getProduct(slug: string) {
+  await dbConnect();
+  let product;
+  if (mongoose.Types.ObjectId.isValid(slug)) {
+    product = await Product.findById(slug).lean();
+  } else {
+    product = await Product.findOne({ slug }).lean();
+  }
+  if (!product) return null;
+  return { ...product, _id: product._id.toString(), createdAt: product.createdAt?.toISOString(), updatedAt: product.updatedAt?.toISOString() };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = products.find((p) => p.slug === slug);
+  const product = await getProduct(slug);
   if (!product) return { title: "Product Not Found — Codematics" };
   return {
     title: `${product.title} — Codematics Services Pvt Ltd`,
@@ -21,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-  const product = products.find((p) => p.slug === slug);
+  const product = await getProduct(slug);
   if (!product) notFound();
-  return <ProductDetailClient product={product!} />;
+  return <ProductDetailClient product={product} />;
 }

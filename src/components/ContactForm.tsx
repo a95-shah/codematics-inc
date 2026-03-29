@@ -6,11 +6,34 @@ import { motion } from "framer-motion";
 export default function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    alert("Thank you for your message! We will get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
+    setLoading(true);
+    setError("");
+    
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, subject: "Website Contact Form Submission" })
+      });
+      
+      if (res.ok) {
+        setSuccess(true);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setSuccess(false), 5000);
+      } else {
+        const data = await res.json();
+        setError(data.error || "Failed to send message.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    }
+    setLoading(false);
   };
 
   const inputClass = (field: string) =>
@@ -29,6 +52,17 @@ export default function ContactForm() {
       transition={{ duration: 0.6 }}
       className="flex flex-col gap-5"
     >
+      {success && (
+        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-xl text-sm font-bold text-center">
+          Message sent successfully! We will get back to you soon.
+        </div>
+      )}
+      {error && (
+        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-bold rounded-xl text-center">
+          {error}
+        </div>
+      )}
+
       <div>
         <input
           type="text"
@@ -39,6 +73,7 @@ export default function ContactForm() {
           onBlur={() => setFocused(null)}
           required
           className={inputClass("name")}
+          disabled={loading}
         />
       </div>
       <div>
@@ -51,6 +86,7 @@ export default function ContactForm() {
           onBlur={() => setFocused(null)}
           required
           className={inputClass("email")}
+          disabled={loading}
         />
       </div>
       <div>
@@ -63,15 +99,17 @@ export default function ContactForm() {
           required
           rows={5}
           className={`${inputClass("message")} resize-y min-h-[120px]`}
+          disabled={loading}
         />
       </div>
       <motion.button
         type="submit"
-        className="btn-primary w-full justify-center !py-[18px] !px-8 !text-base"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        disabled={loading}
+        className="btn-primary w-full justify-center !py-[18px] !px-8 !text-base disabled:opacity-50 disabled:cursor-not-allowed"
+        whileHover={!loading ? { scale: 1.02 } : {}}
+        whileTap={!loading ? { scale: 0.98 } : {}}
       >
-        Send Message
+        {loading ? "Sending..." : "Send Message"}
       </motion.button>
     </motion.form>
   );
